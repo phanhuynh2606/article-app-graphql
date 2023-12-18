@@ -12,7 +12,7 @@ export const typeDefsArticle = gql`
 
   # Cho phép truy vấn ra data
   type Query {
-    getListArticle: [Article]
+    getListArticle(sortKey:String,sortValue:String): [Article]
     getArticle(id: ID): Article
   }
 
