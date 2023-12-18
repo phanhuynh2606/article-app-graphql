@@ -1,19 +1,27 @@
+import { skip } from "node:test";
 import Article from "../model/article.model";
 import Category from "../model/category.model";
 
 export const resolversArticles = {
   Query: {
     getListArticle: async (_, args) => {
-      const { sortKey, sortValue } = args;
+      const { sortKey, sortValue, currentPage, limitItems } = args;
       //   Sort
       const sort = {};
       if (sortKey && sortValue) {
         sort[sortKey] = sortValue;
       }
       // End Sort
+
+      //   pagination
+      const skip = (currentPage - 1) * limitItems;
+      //   pagination
       const articles = await Article.find({
         deleted: false,
-      }).sort(sort);
+      })
+        .sort(sort)
+        .limit(limitItems)
+        .skip(skip);
 
       return articles;
     },

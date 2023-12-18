@@ -12,7 +12,7 @@ export const typeDefsArticle = gql`
 
   # Cho phép truy vấn ra data
   type Query {
-    getListArticle(sortKey:String,sortValue:String): [Article]
+    getListArticle(sortKey: String, sortValue: String,currentPage: Int = 1,limitItems: Int = 2): [Article]
     getArticle(id: ID): Article
   }
 
@@ -26,10 +26,10 @@ export const typeDefsArticle = gql`
   }
 
   type Return {
-    code: String
+    code: String,
     message: String
   }
-  
+
   # Cho phép gửi data để thêm sửa xoá data
   type Mutation {
     createArticle(article: ArticleInput): Article
