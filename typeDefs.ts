@@ -8,11 +8,18 @@ export const typeDefs = gql`
     avatar: String
     description: String
   }
+  type Category {
+    id: ID
+    title: String
+    avatar: String
+  }
   # Cho phép truy vấn ra data
   type Query {
     hello: String
     getListArticle: [Article]
     getArticle(id: ID): Article
+    getListCategory: [Category]
+    getCategory(id: ID): Category
   }
 
   # Cho phép gửi data để thêm sửa xoá data
@@ -20,6 +27,10 @@ export const typeDefs = gql`
     title: String
     avatar: String
     description: String
+  }
+  input CategoryInput {
+    title: String
+    avatar: String
   }
   type Return {
     code: String
@@ -29,5 +40,9 @@ export const typeDefs = gql`
     createArticle(article: ArticleInput): Article
     updateArticle(id: ID, article: ArticleInput): Article
     deleteArticle(id: ID): Return
+
+    createCategory(category: CategoryInput): Category
+    updateCategory(id: ID, category: CategoryInput): Category
+    deleteCategory(id: ID): Return
   }
 `;
