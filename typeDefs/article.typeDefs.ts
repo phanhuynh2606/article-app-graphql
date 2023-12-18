@@ -12,7 +12,14 @@ export const typeDefsArticle = gql`
 
   # Cho phép truy vấn ra data
   type Query {
-    getListArticle(sortKey: String, sortValue: String,currentPage: Int = 1,limitItems: Int = 2): [Article]
+    getListArticle(
+      sortKey: String
+      sortValue: String
+      currentPage: Int = 1
+      limitItems: Int = 2
+      filterKey: String
+      filterValue: String
+    ): [Article]
     getArticle(id: ID): Article
   }
 
@@ -25,8 +32,8 @@ export const typeDefsArticle = gql`
     categoryId: String
   }
 
-  type Return {
-    code: String,
+  type ReturnDelete {
+    code: Int
     message: String
   }
 
@@ -34,6 +41,6 @@ export const typeDefsArticle = gql`
   type Mutation {
     createArticle(article: ArticleInput): Article
     updateArticle(id: ID, article: ArticleInput): Article
-    deleteArticle(id: ID): Return
+    deleteArticle(id: ID): ReturnDelete
   }
 `;

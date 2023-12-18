@@ -5,7 +5,11 @@ import Category from "../model/category.model";
 export const resolversArticles = {
   Query: {
     getListArticle: async (_, args) => {
-      const { sortKey, sortValue, currentPage, limitItems } = args;
+      const { sortKey, sortValue, currentPage, limitItems, filterKey,filterValue } = args;
+
+      const find = {
+        deleted : false
+      }
       //   Sort
       const sort = {};
       if (sortKey && sortValue) {
@@ -16,9 +20,13 @@ export const resolversArticles = {
       //   pagination
       const skip = (currentPage - 1) * limitItems;
       //   pagination
-      const articles = await Article.find({
-        deleted: false,
-      })
+
+    //   filter
+    if(filterKey && filterValue){
+        find[filterKey] = filterValue
+    }
+    // End filter
+      const articles = await Article.find(find)
         .sort(sort)
         .limit(limitItems)
         .skip(skip);
@@ -92,7 +100,7 @@ export const resolversArticles = {
       );
 
       return {
-        code: "200",
+        code: 200,
         message: "Xoá thành công",
       };
     },
