@@ -13,7 +13,7 @@ export const typeDefsUser = gql`
 
   # Cho phép truy vấn ra data
   type Query {
-    getUser(id: ID): User
+    getUser: User
   }
 
   # Định nghĩa những key cho phép người nhập để gửi lên

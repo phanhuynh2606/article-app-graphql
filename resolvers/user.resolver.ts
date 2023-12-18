@@ -1,16 +1,46 @@
+import { Token } from "graphql";
 import { generateRandomString } from "../helpers/generate";
 import User from "../model/user.model";
 import md5 from "md5";
 export const resolversUser = {
   Query: {
-    getUser: async (_, args) => {
-      const { id } = args;
+    // getUser: async (_, args) => {
+    //   const { id } = args;
 
-      try {
+    //   try {
+    //     const infoUser = await User.findOne({
+    //       _id: id,
+    //       deleted: false,
+    //     });
+    //     if (infoUser) {
+    //       return {
+    //         code: 200,
+    //         message: "Thành công!",
+    //         id: infoUser.id,
+    //         fullName: infoUser.fullName,
+    //         email: infoUser.email,
+    //         token: infoUser.token,
+    //       };
+    //     } else {
+    //       return {
+    //         code: 400,
+    //         message: "Thất bại!",
+    //       };
+    //     }
+    //   } catch (error) {
+    //     return {
+    //       code: 400,
+    //       message: "Thất bại!",
+    //     };
+    //   }
+    // },
+    getUser: async (_, args, context) => {
+      if (context["user"]) {
         const infoUser = await User.findOne({
-          _id: id,
+          token: context["user"].token,
           deleted: false,
         });
+
         if (infoUser) {
           return {
             code: 200,
@@ -18,7 +48,6 @@ export const resolversUser = {
             id: infoUser.id,
             fullName: infoUser.fullName,
             email: infoUser.email,
-            token: infoUser.token,
           };
         } else {
           return {
@@ -26,10 +55,10 @@ export const resolversUser = {
             message: "Thất bại!",
           };
         }
-      } catch (error) {
+      } else {
         return {
-          code: 400,
-          message: "Thất bại!",
+          code: 403,
+          message: "Không có quyền truy cập!",
         };
       }
     },
