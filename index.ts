@@ -20,6 +20,7 @@ app.use("/graphql",requireAuth);
   const apolloServer = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolvers,
+    introspection: true,
     context: ({req}) => req
   });
 
